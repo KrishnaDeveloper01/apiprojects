@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Widget</title>
+	<link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
+    <style>
+		*{
+			font-family: 'Poor Story', system-ui;
+		}
+		.weather-container {
+			font-family: sans-serif;
+			margin: 20px auto;
+			padding: 20px;
+			padding-bottom: 0px;
+			width: 500px;
+			height: 430px;
+			border: 1px solid #000;
+			border-radius: 50px;
+		}
+		.weather-header{
+			display: flex;
+			justify-content: center;
+			margin: 30px 0px;
+		}
+		#text{
+			text-align: center;
+		}
+		#inputSearch{
+			padding: 7px 30px;
+			border-radius: 20px;
+			border: none;
+			outline: none;
+			font-size: 25px;
+		}
+		#inputbox{
+			background-color: rgb(65, 172, 172);
+			padding: 15px 30px;
+			border-radius: 50px;
+		}
+		#btn{
+			padding: 7px 30px;
+			font-weight: 900;
+			background-color: rgb(211, 52, 52);
+			color: #ffffff;
+			border-radius: 20px;
+			border: none;
+			font-size: 25px;
+			cursor: pointer;
+		}
+		#inputSearch::placeholder{
+			font-size: 15px;
+		}
+		#location{
+			text-align: center;
+			font-size: 25px;
+		}
+		#weatherImage{
+			width: 100px;
+			display: block;
+			margin: 0px auto;
+		}
+		#temperature{
+			text-align: center;
+			font-size: 50px;
+			margin-top: 5px;
+			font-weight: 900;
+		}
+		#description{
+			text-align: center;
+			margin-top: -45px;
+			font-size: 20px;
+			font-weight: 500;
+		}
+		.weather-footer{
+			display: flex;
+			justify-content: space-around;
+			border-top: solid 1px #000000;
+			padding: 15px 30px;
+			font-size: 20px;
+		}
+		/* .weather-body{
+			display: none;
+		}
+		.subfooter{
+			display: none;
+		} */
+	</style>
+</head>
+<body>
+    <div class="weather-container">
+		<h1 id="text">Weather APP</h1>
+		<div class="weather-header">
+			<div id="inputbox">
+				<input type="text" id="inputSearch" placeholder="Enter City">
+				<button id="btn">Search</button>
+			</div>
+		</div>
+		<div class="weather-body">
+			<h1 id="location">Kathmandu, Nepal</h1>
+			<img src="assets/404.png" alt="Weather Image" id="weatherImage">
+			<p id="temperature"></p>
+			<p id="description">Broken clouds</p>
+		</div>
+		<div class="weather-footer">
+				<div class="feels-like">
+					<span><b>Wind Speed:</b></span> <span id="wind">17°C</span>
+				</div>
+				<div class="humidity">
+					<span><b>Humidity:</b></span> <span id="humidity">84%</span>
+				</div>
+		</div>
+    </div>
+
+	<script>
+		const searchbtn = document.getElementById('btn'); 
+		const searchbox = document.getElementById('inputSearch'); 
+		const weatherlocation = document.getElementById('location'); 
+		const pics = document.getElementById('weatherImage'); 
+		const temperature = document.getElementById('temperature'); 
+		const description = document.getElementById('description'); 
+		const wind = document.getElementById('wind'); 
+		const humidity = document.getElementById('humidity'); 
+
+		async function weatherdata(city){
+			// const displ = document.querySelector('.weather-body');
+			// const subfooter = document.querySelector('.subfooter');
+			// displ.style.display = "block";
+			// subfooter.style.display = "flex";
+
+			const api_key= "eaf32cae638f9d954cf9afa74b584429";
+			const api_url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${api_key}`;
+
+			const weathercontent = await fetch(`${api_url}`)
+			.then(data => data.json());
+
+			// console.log(weathercontent);
+			temperature.innerHTML = `${Math.round(weathercontent.main.temp - 273.15)}°C`;
+			description.innerHTML = `${weathercontent.weather[0].description}`;
+			wind.innerHTML = `${weathercontent.wind.speed} m/s`;
+			humidity.innerHTML = `${weathercontent.main.humidity} %`;
+			weatherlocation.innerHTML = `${city},${weathercontent.sys.country}`;
+
+			switch(`${weathercontent.weather[0].description}`){
+				case 'clear sky':
+				pics.src = "assets/clear.png";
+				break;
+
+				case 'few clouds':
+				pics.src = "assets/fewclouds.png";
+				break;
+
+				case 'mist':
+				pics.src = "assets/mist.png";
+				break;
+
+				case 'rain':
+				pics.src = "assets/rain.png";
+				break;
+
+				case 'snow':
+				pics.src = "assets/snow.png";
+				break;
+
+				case 'scattered clouds':
+				pics.src = "assets/scatteredclouds.png";
+				break;
+
+				case 'broken clouds':
+				pics.src = "assets/brokenclouds.png";
+				break;
+
+				case 'shower rain':
+				pics.src = "assets/showerrain.png";
+				break;
+
+				case 'thunderstorm':
+				pics.src = "assets/thunderstorm.png";
+				break;
+
+				case 'fog':
+				pics.src = "assets/fog.png";
+				break;
+
+				case 'smoke':
+				pics.src = "assets/smoke.png";
+				break;
+
+				case 'cloud':
+				pics.src = "assets/cloud.png";
+				break;
+
+				default:
+					pics.src = "assets/404.png";
+			}
+		}
+
+		searchbtn.addEventListener('click',function (){
+			weatherdata(searchbox.value);
+		})
+	</script>
+</body>
+</html>

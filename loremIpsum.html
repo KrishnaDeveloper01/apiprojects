@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+    <style>
+        #text{
+            text-align: center;
+            background-color: red;
+            color: white;
+            padding: 20px 0px;
+        }
+        .wrapper-body{
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #noofpara{
+            padding: 9px;
+        }
+        #displaypara{
+            font-size: 20px;
+            text-align: justify;
+        }
+        br{
+           content: ""!important;
+           display: block !important;
+           margin-bottom: 1em !important;
+        }
+        #generatepara,#copypara{
+            border: none;
+            background-color: red;
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+	<div class="wrapper">
+        <h1 id="text">LOREM IPSUM APP</h1>
+       <div class="wrapper-body">
+            <input type="number" id="noofpara" min="1">
+            &nbsp;&nbsp;
+            <button id="generatepara">Generate</button>
+            &nbsp;&nbsp;
+            <button id="copypara">Copy</button>
+       </div>
+       <p id="displaypara"></p>
+    </div>
+
+    <script>
+        let generateparaelement = document.getElementById('generatepara');
+        let copyparaelement = document.getElementById('copypara');
+        let displayparaelement = document.getElementById('displaypara');
+
+        let api_key = "JwfCedVSk8GH3CjTRVw9Nvxa85o6GJ5NUdeX1SfV";
+
+        let options = {
+            method : "GET",
+            headers : { 'X-Api-Key' : api_key }
+        }
+
+        let api_url = "https://api.api-ninjas.com/v1/loremipsum?paragraphs=";
+        let createpara = () =>{
+            let totalpara = document.getElementById('noofpara').value;
+            let finalurl = api_url + totalpara;
+
+            fetch(finalurl,options)
+            .then(data => data.json())
+            .then(item => {
+                displayparaelement.innerText = item.text;
+            })
+        }
+
+        let fullcopypara = () =>{
+            navigator.clipboard.writeText(displayparaelement.innerText);
+            alert('Paragraph copied successfully!');
+        }
+
+        generateparaelement.addEventListener('click',createpara);
+        copyparaelement.addEventListener('click',fullcopypara);
+    </script>
+</body>
+</html>

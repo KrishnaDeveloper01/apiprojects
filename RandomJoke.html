@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            background-color: rgb(117, 117, 9);
+        }
+        .wrapper{
+            width: 700px;
+            background-color: #000;
+            padding: 50px;
+            margin: 20px auto 100px;
+        }
+        #joke{
+            color: #fff;
+            font-size: 18px;
+            font-size: 400;
+            margin: 20px 0px;
+            text-align: center;
+            font-family: 'Oswald', sans-serif;
+        }
+        span{
+            font-size: 150px;
+            display: block;
+            text-align: center;
+        }
+        #btn{
+            border: none;
+            padding: 30px 40px;
+            color: #fff;
+            background-color: rgb(117, 117, 9);
+            font-size: 18px;
+            font-size: 400;
+            font-family: 'Oswald', sans-serif;
+            border-radius: 50px;
+            display: block;
+            margin: 0px auto;
+            cursor: pointer;
+        }
+        #btn:hover{
+            background-color: rgb(134, 134, 22);
+        }
+        #text{
+            text-align: center;
+            font-family: 'Oswald', sans-serif;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="text">It's Time for Joke</h1>
+    <div class="wrapper">
+        <span>&#128514;</span>
+        <p id="joke"></p>
+        <button id="btn">Get The Random Joke</button>
+    </div>
+
+    <script>
+        const jokeContainer = document.getElementById('joke');
+        const btn = document.getElementById('btn');
+
+        // API URL
+        const url = "https://v2.jokeapi.dev/joke/Any?type=single";
+
+        const getJoke = () => {
+            fetch(url)
+            .then(data => data.json())
+            .then(item => {
+                jokeContainer.textContent = `${item.joke}`;
+            });
+        }
+        btn.addEventListener('click',getJoke);
+        getJoke();
+    </script>
+</body>
+</html>

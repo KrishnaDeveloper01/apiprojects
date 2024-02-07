@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            background-color: rgb(117, 117, 9);
+        }
+        .wrapper{
+            width: 450px;
+            background-color: #e61e1e;
+            padding: 50px;
+            margin: 20px auto 100px;
+        }
+        #quote{
+            color: #fff;
+            font-size: 18px;
+            font-size: 400;
+            margin: 20px 0px;
+            text-align: center;
+            font-family: 'Oswald', sans-serif;
+        }
+        #btn{
+            border: none;
+            padding: 30px 30px;
+            color: #fff;
+            background-color: rgb(117, 117, 9);
+            font-size: 18px;
+            font-size: 400;
+            font-family: 'Oswald', sans-serif;
+            border-radius: 50px;
+            display: block;
+            margin: 30px auto 0px;
+            cursor: pointer;
+        }
+        #btn:hover{
+            background-color: rgb(134, 134, 22);
+        }
+        #text{
+            text-align: center;
+            font-family: 'Oswald', sans-serif;
+            background-color: #fff;
+            width: 500px;
+            margin: 30px auto;
+        }
+        #author{
+            font-family: 'Oswald', sans-serif;
+            color: #ffffff;
+            text-align: right;
+            margin-top: 20px;
+        }
+        #pic img{
+            width: 300px;
+            text-align: center;
+        }
+        #title{
+            margin-bottom: 20px;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="text">Meme Generator</h1>
+    <div class="wrapper">
+        <h1 id="title"></h1>
+        <div id="pic">
+            <img src="" id="meme">
+        </div>
+        <h2 id="author"></h2>
+        <button id="btn">Get The Random Meme</button>
+    </div>
+
+    <script>
+        let Memetitle = document.getElementById('title');
+        let Memepic = document.getElementById('meme');
+        let Memeauthor = document.getElementById('author');
+        let btn = document.getElementById('btn');
+
+        // API For MEME
+        let url = "https://meme-api.com/gimme";
+
+        let updateDetails = (url,title,author) =>{
+                Memepic.setAttribute('src',url);
+                Memetitle.innerHTML = title;
+                Memeauthor.innerHTML = `Meme by: ${author}`;
+        }
+
+        let getMeme = () =>{
+            fetch(url)
+            .then(data => data.json())
+            .then(item => {
+                updateDetails(item.url,item.title,item.author);
+            })
+        }
+        btn.addEventListener('click',getMeme);
+        getMeme();
+    </script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            background-color: rgb(117, 117, 9);
+        }
+        .wrapper{
+            width: 700px;
+            background-color: #000;
+            padding: 50px;
+            margin: 20px auto 100px;
+        }
+        #quote{
+            color: #fff;
+            font-size: 18px;
+            font-size: 400;
+            margin: 20px 0px;
+            text-align: center;
+            font-family: 'Oswald', sans-serif;
+        }
+        #btn{
+            border: none;
+            padding: 30px 40px;
+            color: #fff;
+            background-color: rgb(117, 117, 9);
+            font-size: 18px;
+            font-size: 400;
+            font-family: 'Oswald', sans-serif;
+            border-radius: 50px;
+            display: block;
+            margin: 30px auto 0px;
+            cursor: pointer;
+        }
+        #btn:hover{
+            background-color: rgb(134, 134, 22);
+        }
+        #text{
+            text-align: center;
+            font-family: 'Oswald', sans-serif;
+            background-color: #fff;
+            width: 500px;
+            margin: 30px auto;
+        }
+        #author{
+            font-family: 'Oswald', sans-serif;
+            color: #ffffff;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="text">It's Time for Motivation</h1>
+    <div class="wrapper">
+        <h1 id="quote"></h1>
+        <h2 id="author"></h2>
+        <button id="btn">Get The Random Quote</button>
+    </div>
+
+    <script>
+        const quote = document.getElementById('quote');
+        const author = document.getElementById('author');
+        const btn = document.getElementById('btn');
+
+        // Quote API
+        const url = "https://api.quotable.io/random";
+        const getQuote = () =>{
+            fetch(url)
+            .then(data => data.json())
+            .then(item => {
+                quote.innerText = item.content
+                author.innerText = item.author
+            })
+        }
+        btn.addEventListener('click',getQuote);
+        getQuote();
+    </script>
+</body>
+</html>

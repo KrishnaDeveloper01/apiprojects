@@ -1,0 +1,4 @@
+https://api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
+
+kimaj71151@giratex.com
+kimaj71151@giratex.com
